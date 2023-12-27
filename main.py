@@ -32,11 +32,12 @@ urls = {
     'medicine': ['https://in.ncu.edu.tw/alumni/web/benefits.php?type=aesthetic%20medicine#']
 }
 typelist = ['restaurant', 'transportation', 'grocery', 'amusement', 'snack', 'school', 'hotel', 'medicine']
-
-for i in typelist:
-    typeurl = urls[i]
+benefitlist = []
+for i in range(8):
+    typeurl = urls[typelist[i]]
     length = len(typeurl)
-    for j in range(1):
+    mlist = []
+    for j in range(length):
         url = typeurl[j]
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -71,21 +72,9 @@ for i in typelist:
                         s+=i[j]
                     listhttp.append(s)
                     slist.append(s)
-            print(slist)
+            # print(slist)
+            mlist.append(slist)
+    benefitlist.append(mlist)
     
-            
-            
-            
-    
-        
-        
-    
+print(benefitlist)
 
-exit()
-
-# Finding elements with class 'my-1'
-elements = soup.find_all(class_='my-1')
-
-# Extracting and printing the text from each element
-for element in elements:
-    print(element.get_text(strip=True))
