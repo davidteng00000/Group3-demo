@@ -13,6 +13,59 @@ link.setOpenExternalLinks(True)
 link.setGeometry(20, 20, 200, 150)
 link.setText('<a href="https://www.google.com">Visit Example.com</a>')
 
+label1 = QtWidgets.QLabel(Form)
+label1.setGeometry(0,200,600,70)
+label1.setText("foodpanda校友貴賓獨享優惠")
+label1.setAlignment(QtCore.Qt.AlignCenter)
+
+label1.setStyleSheet('''
+    QLabel {
+        font-size:40px;
+    }
+''')
+
+label2 = QtWidgets.QLabel(Form)
+label2.setGeometry(50,250,600,70)
+label2.setText("地區\n聯絡電話\n地址")
+
+label2.setStyleSheet('''
+    QLabel {
+        font-size:15px;
+    }
+''')
+
+textedit1 = QtWidgets.QTextEdit(Form)
+textedit1.setGeometry(45,320,500,300)
+textedit1.setReadOnly(True)
+textedit1.setPlainText("優惠內容:\n適用對象 全體同仁\n一、加入步驟：\n［同仁升級企業帳號］\n員工自行填表申請加入，表單 https://forms.gle/am3rtbBYFu8ECT9G9\nstep2.信箱點開<立即啟用您的企業帳號> *填寫完成後1工作天收到開通信件\n\n\n\n\n\n\n\n\n\n\n\nhaha")
+
+textedit1.setStyleSheet('''
+    QTextEdit {
+        font-size:15px;
+    }
+''')
+
+label3 = QtWidgets.QLabel(Form)
+label3.setGeometry(50,600,600,70)
+label3.setText("優惠期限")
+
+label3.setStyleSheet('''
+    QLabel {
+        font-size:15px;
+    }
+''')
+
+link2=QtWidgets.QLabel(Form)
+link2.setOpenExternalLinks(True)
+link2.setGeometry(50, 650, 600, 70)
+link2.setText('<a href="https://www.google.com">網站連結</a>')
+
+link2.setStyleSheet('''
+    QLabel {
+        font-size:15px;
+    }
+''')
+
 pushButton_next = QtWidgets.QPushButton(Form)
 pushButton_next.setGeometry(QtCore.QRect(472, 750, 113, 32))
 pushButton_next.setObjectName("pushButton1")
