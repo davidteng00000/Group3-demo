@@ -31,7 +31,7 @@ urls = {
               'https://in.ncu.edu.tw/alumni/web/benefits.php?area=&keyword=&type=hotel&page=90'],
     'medicine': ['https://in.ncu.edu.tw/alumni/web/benefits.php?type=aesthetic%20medicine#']
 }
-typelist = ['restaurant']#, 'transportation', 'grocery', 'amusement', 'snack', 'school', 'hotel', 'medicine']
+typelist = ['restaurant', 'transportation', 'grocery', 'amusement', 'snack', 'school', 'hotel', 'medicine']
 
 for i in typelist:
     typeurl = urls[i]
@@ -41,7 +41,7 @@ for i in typelist:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         elements = soup.find_all(class_='row py-3')
-        
+        listhttp=[]
         for element in elements:
             slist = []
             title = element.find('h4', class_='my-1')
@@ -50,11 +50,29 @@ for i in typelist:
             index1 = ''
             index = 0
             for c in content:
-                if index != 4:
+                if index <= 4:
                     index1 += c.get_text(strip=True)
                     index1 += '\n'
-                print(c.get_text(strip=True))
-            print()
+                    if index==4:
+                        slist.append(index1)                    
+                if index==5:
+                    slist.append(c.get_text(strip=True))
+                index+=1
+            http=element.find_all('a',class_="text-warning")
+            cc=0   
+            for i in http:
+                i=str(i)
+                if i[29]=='\"' and i[30]=='h' and cc<=9:
+                    cc+=1
+                    s=""
+                    for j in range(30,1000):
+                        if i[j]=="\"":
+                            break
+                        s+=i[j]
+                    listhttp.append(s)
+                    slist.append(s)
+            print(slist)
+    
             
             
             
