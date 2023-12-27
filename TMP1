@@ -62,8 +62,11 @@ for i in range(8):
                     s=""
                     for j in range(52,1000):
                         if i[j]=="\"":
+                            if i[j-1] == '/':
+                                s+='?'
                             break
                         s+=i[j]
+                    
                     slist.append(s)
                 index+=1
             # print(slist)
