@@ -46,7 +46,6 @@ for i in range(8):
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         elements = soup.find_all(class_='row py-3')
-        listhttp=[]
         for element in elements:
             slist = []
             title = element.find('h4', class_='my-1')
@@ -62,24 +61,20 @@ for i in range(8):
                         slist.append(index1)                    
                 if index==5:
                     slist.append(c.get_text(strip=True))
-                index+=1
-            http=element.find_all('a',class_="text-warning")
-            cc=0   
-            for i in http:
-                i=str(i)
-                if i[29]=='\"' and i[30]=='h' and cc<=9:
-                    cc+=1
+                if index==6:
+                    i=str(c)
                     s=""
-                    for j in range(30,1000):
+                    for j in range(52,1000):
                         if i[j]=="\"":
                             break
                         s+=i[j]
-                    listhttp.append(s)
                     slist.append(s)
+                index+=1
             # print(slist)
             mlist.append(slist)
     benefitlist.append(mlist)
-
+index_type=0
+index_nth=0
 #-----------------------UI區-----------------------------------
 
 app = QtWidgets.QApplication(sys.argv)
@@ -135,16 +130,44 @@ link2.setStyleSheet('''
         font-family:Microsoft JhengHei;
     }
 ''')
+page = QtWidgets.QLabel(Form) #標題
+page.setGeometry(0,750,600,70)
+page.setText("1")
+page.setAlignment(QtCore.Qt.AlignCenter)
+
+
+
+style_btn = '''
+    QPushButton{
+        background:#D0D0D0;
+        border:1px solid #000;
+        border-radius:10px;
+       
+    }
+    QPushButton:pressed{
+        background:#8E8E8E;
+    }
+'''
+
+font = QtGui.QFont()
+font.setPointSize(15)  # 設定字體大小
+font.setFamily("Microsoft JhengHei")
+font.setBold(True)    # 設定為粗體
 
 pushButton_next = QtWidgets.QPushButton(Form)
 pushButton_next.setGeometry(QtCore.QRect(472, 750, 113, 32))
 pushButton_next.setObjectName("pushButton1")
-pushButton_next.setText("下一則優惠")
+pushButton_next.setText("下一則")
+pushButton_next.setStyleSheet(style_btn)
+pushButton_next.setFont(font)
+
 
 pushButton_pre = QtWidgets.QPushButton(Form)
 pushButton_pre.setGeometry(QtCore.QRect(15, 750, 113, 32))
 pushButton_pre.setObjectName("pushButton2")
-pushButton_pre.setText("上一則優惠")
+pushButton_pre.setText("上一則")
+pushButton_pre.setStyleSheet(style_btn)
+pushButton_pre.setFont(font)
 
 
 box = QtWidgets.QComboBox(Form)   # 加入下拉選單
@@ -158,5 +181,55 @@ box.setItemIcon(4,QtGui.QIcon('pic/snack.jpg'))
 box.setItemIcon(5,QtGui.QIcon('pic/school.jpg'))
 box.setItemIcon(6,QtGui.QIcon('pic/hotel.jpg'))
 box.setItemIcon(7,QtGui.QIcon('pic/aesthetic.png'))
+
+def check_button():
+    global index_nth,index_type,benefitlist
+    if index_nth==0:
+        pushButton_pre.setDisabled(True)
+    else:
+        pushButton_pre.setDisabled(False)
+
+    if index_nth==(len(benefitlist[index_type])-1) :
+        pushButton_next.setDisabled(True)
+    else:
+        pushButton_next.setDisabled(False)
+
+def update(i,j):
+    global benefitlist
+    check_button()
+    label1.setText(benefitlist[i][j][0])
+    textedit1.setPlainText(benefitlist[i][j][1])
+    label3.setText(benefitlist[i][j][2])
+    link2.setText(f"<a href={benefitlist[i][j][3]}>網站連結</a>")
+    print(benefitlist[i][j][3])
+
+def change_type():
+    global index_nth,index_type,benefitlist
+    index_type=box.currentIndex()
+    index_nth=0
+    update(index_type,index_nth)
+    page.setText(str(index_nth+1))
+
+def next():
+    global index_nth,index_type,benefitlist
+    index_nth+=1
+    update(index_type,index_nth)
+    page.setText(str(index_nth+1))
+    
+
+def back():
+    global index_nth,index_type,benefitlist
+    index_nth-=1
+    update(index_type,index_nth)
+    page.setText(str(index_nth+1))
+
+
+box.currentIndexChanged.connect(change_type)     
+pushButton_next.clicked.connect(next)
+pushButton_pre.clicked.connect(back)
+pushButton_pre.setDisabled(True)
+
 Form.show()
 sys.exit(app.exec_())
+
+
