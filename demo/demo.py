@@ -17,6 +17,7 @@ label1.setStyleSheet('''
     QLabel {
         font-size:40px;
         font-family:Microsoft JhengHei;
+        color:#2F4F4F;
     }
 ''')
 
@@ -32,7 +33,7 @@ textedit1.setStyleSheet('''
     }
 ''')
 
-label3 = QtWidgets.QLabel(Form)
+label3 = QtWidgets.QLabel(Form) #優惠期限
 label3.setGeometry(25,565,600,70)
 label3.setText("優惠期限")
 
@@ -40,6 +41,7 @@ label3.setStyleSheet('''
     QLabel {
         font-size:15px;
         font-family:Microsoft JhengHei;
+        color:#DAA520;
     }
 ''')
 
