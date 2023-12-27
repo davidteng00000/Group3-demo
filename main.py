@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-# URL of the website to be scraped
-
 urls = {
     'restaurant': ['https://in.ncu.edu.tw/alumni/web/benefits.php?area=&keyword=&type=restaurant&page=0',
                    'https://in.ncu.edu.tw/alumni/web/benefits.php?area=&keyword=&type=restaurant&page=10',
@@ -33,20 +31,33 @@ urls = {
               'https://in.ncu.edu.tw/alumni/web/benefits.php?area=&keyword=&type=hotel&page=90'],
     'medicine': ['https://in.ncu.edu.tw/alumni/web/benefits.php?type=aesthetic%20medicine#']
 }
-typelist = ['restaurant', 'transportation', 'grocery', 'amusement', 'snack', 'school', 'hotel', 'medicine']
+typelist = ['restaurant']#, 'transportation', 'grocery', 'amusement', 'snack', 'school', 'hotel', 'medicine']
 
-for i in range(0,1):
-    typeurl = urls[typelist[i]]
+for i in typelist:
+    typeurl = urls[i]
     length = len(typeurl)
-    for j in range(length):
+    for j in range(1):
         url = typeurl[j]
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        elements = soup.find_all(class_='my-1')
+        elements = soup.find_all(class_='row py-3')
+        
         for element in elements:
-            print(element.get_text(strip=True))
+            slist = []
+            title = element.find('h4', class_='my-1')
+            slist.append(title.get_text(strip = True))
+            content = element.find_all('p', class_='my-0')
+            index1 = ''
+            index = 0
+            for c in content:
+                if index != 4:
+                    index1 += c.get_text(strip=True)
+                    index1 += '\n'
+                print(c.get_text(strip=True))
             print()
-            print()
+            
+            
+            
     
         
         
