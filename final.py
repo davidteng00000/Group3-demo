@@ -178,7 +178,7 @@ pushButton_pre.setFont(font)
 
 box = QtWidgets.QComboBox(Form)   # 加入下拉選單
 box.addItems(['餐廳','交通','用品','休閒','甜品','校內優惠','飯店','醫療'])   # 加入四個選項 # box.currentIndex()去讀list
-box.setGeometry(375,15,200,30)
+box.setGeometry(340,15,250,40)
 box.setItemIcon(0,QtGui.QIcon('./pic/restaurant.jpg'))
 box.setItemIcon(1,QtGui.QIcon('./pic/transportation.jpg'))
 box.setItemIcon(2,QtGui.QIcon('./pic/grocery.jpg'))
@@ -187,6 +187,7 @@ box.setItemIcon(4,QtGui.QIcon('./pic/snack.jpg'))
 box.setItemIcon(5,QtGui.QIcon('./pic/school.jpg'))
 box.setItemIcon(6,QtGui.QIcon('./pic/hotel.jpg'))
 box.setItemIcon(7,QtGui.QIcon('./pic/aesthetic.png'))
+
 
 def check_button():
     global index_nth,index_type,benefitlist
