@@ -66,8 +66,11 @@ for i in range(8):
                     s=""
                     for j in range(52,1000):
                         if i[j]=="\"":
+                            if i[j-1] == '/':
+                                s+='?'
                             break
                         s+=i[j]
+                    
                     slist.append(s)
                 index+=1
             # print(slist)
@@ -83,13 +86,14 @@ Form.setWindowTitle('Demo')
 Form.resize(600, 812)
 
 label1 = QtWidgets.QLabel(Form) #標題
+label1.setFont(QtGui.QFont('times',5,QtGui.QFont.Bold))
 label1.setGeometry(0,125,600,70)
 label1.setText(benefitlist[0][0][0])
 label1.setAlignment(QtCore.Qt.AlignCenter)
 
 label1.setStyleSheet('''
     QLabel {
-        font-size:40px;
+        font-size:30px;
         font-family:Microsoft JhengHei;
         color:#2F4F4F;
     }
@@ -99,6 +103,7 @@ textedit1 = QtWidgets.QTextEdit(Form) #本文
 textedit1.setGeometry(25,200,550,370)
 textedit1.setReadOnly(True)
 textedit1.setPlainText(benefitlist[0][0][1])
+
 
 textedit1.setStyleSheet('''
     QTextEdit {
@@ -131,9 +136,10 @@ link2.setStyleSheet('''
     }
 ''')
 page = QtWidgets.QLabel(Form) #標題
-page.setGeometry(0,750,600,70)
-page.setText("1")
+page.setGeometry(0,740,600,70)
+page.setText("1"+"/"+str(len(benefitlist[index_type])))
 page.setAlignment(QtCore.Qt.AlignCenter)
+page.setFont(QtGui.QFont('Times', 13,QtGui.QFont.Bold))
 
 
 
@@ -173,14 +179,14 @@ pushButton_pre.setFont(font)
 box = QtWidgets.QComboBox(Form)   # 加入下拉選單
 box.addItems(['餐廳','交通','用品','休閒','甜品','校內優惠','飯店','醫療'])   # 加入四個選項 # box.currentIndex()去讀list
 box.setGeometry(375,15,200,30)
-box.setItemIcon(0,QtGui.QIcon('pic/restaurant.jpg'))
-box.setItemIcon(1,QtGui.QIcon('pic/transportation.jpg'))
-box.setItemIcon(2,QtGui.QIcon('pic/grocery.jpg'))
-box.setItemIcon(3,QtGui.QIcon('pic/amusement.jpg'))
-box.setItemIcon(4,QtGui.QIcon('pic/snack.jpg'))
-box.setItemIcon(5,QtGui.QIcon('pic/school.jpg'))
-box.setItemIcon(6,QtGui.QIcon('pic/hotel.jpg'))
-box.setItemIcon(7,QtGui.QIcon('pic/aesthetic.png'))
+box.setItemIcon(0,QtGui.QIcon('./pic/restaurant.jpg'))
+box.setItemIcon(1,QtGui.QIcon('./pic/transportation.jpg'))
+box.setItemIcon(2,QtGui.QIcon('./pic/grocery.jpg'))
+box.setItemIcon(3,QtGui.QIcon('./pic/amusement.jpg'))
+box.setItemIcon(4,QtGui.QIcon('./pic/snack.jpg'))
+box.setItemIcon(5,QtGui.QIcon('./pic/school.jpg'))
+box.setItemIcon(6,QtGui.QIcon('./pic/hotel.jpg'))
+box.setItemIcon(7,QtGui.QIcon('./pic/aesthetic.png'))
 
 def check_button():
     global index_nth,index_type,benefitlist
@@ -197,31 +203,33 @@ def check_button():
 def update(i,j):
     global benefitlist
     check_button()
-    label1.setText(benefitlist[i][j][0])
+    tmp = benefitlist[i][j][0]
+    if(len(tmp) > 19):
+        tmp = benefitlist[i][j][0][0:19] + "..."
+    label1.setText(tmp)
     textedit1.setPlainText(benefitlist[i][j][1])
     label3.setText(benefitlist[i][j][2])
     link2.setText(f"<a href={benefitlist[i][j][3]}>網站連結</a>")
-    print(benefitlist[i][j][3])
 
 def change_type():
     global index_nth,index_type,benefitlist
     index_type=box.currentIndex()
     index_nth=0
     update(index_type,index_nth)
-    page.setText(str(index_nth+1))
+    page.setText(str(index_nth+1)+"/"+str(len(benefitlist[index_type])))
 
 def next():
     global index_nth,index_type,benefitlist
     index_nth+=1
     update(index_type,index_nth)
-    page.setText(str(index_nth+1))
+    page.setText(str(index_nth+1)+"/"+str(len(benefitlist[index_type])))
     
 
 def back():
     global index_nth,index_type,benefitlist
     index_nth-=1
     update(index_type,index_nth)
-    page.setText(str(index_nth+1))
+    page.setText(str(index_nth+1)+"/"+str(len(benefitlist[index_type])))
 
 
 box.currentIndexChanged.connect(change_type)     
@@ -231,5 +239,3 @@ pushButton_pre.setDisabled(True)
 
 Form.show()
 sys.exit(app.exec_())
-
-
