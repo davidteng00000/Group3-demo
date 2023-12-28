@@ -93,7 +93,7 @@ label1.setAlignment(QtCore.Qt.AlignCenter)
 
 label1.setStyleSheet('''
     QLabel {
-        font-size:40px;
+        font-size:30px;
         font-family:Microsoft JhengHei;
         color:#2F4F4F;
     }
@@ -203,7 +203,10 @@ def check_button():
 def update(i,j):
     global benefitlist
     check_button()
-    label1.setText(benefitlist[i][j][0])
+    tmp = benefitlist[i][j][0]
+    if(len(tmp) > 19):
+        tmp = benefitlist[i][j][0][0:19] + "..."
+    label1.setText(tmp)
     textedit1.setPlainText(benefitlist[i][j][1])
     label3.setText(benefitlist[i][j][2])
     link2.setText(f"<a href={benefitlist[i][j][3]}>網站連結</a>")
