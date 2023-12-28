@@ -107,7 +107,7 @@ textedit1.setPlainText(benefitlist[0][0][1])
 
 textedit1.setStyleSheet('''
     QTextEdit {
-        font-size:12px;
+        font-size:15px;
         font-family:Microsoft JhengHei;
     }
 ''')
